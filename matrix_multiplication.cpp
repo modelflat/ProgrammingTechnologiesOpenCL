@@ -1,3 +1,10 @@
+/*!
+  * \defgroup matrix_multiplication Перемножение матриц C++
+  * @{
+  * \todo test for different matrices!
+  * \todo add doxygen documentation
+  */
+
 #define __CL_ENABLE_EXCEPTIONS
 #include <CL/cl.hpp>
 
@@ -10,8 +17,6 @@
 #include <string_view>
 
 using namespace std::literals::string_view_literals;
-
-/**! \todo test for different matrices! */
 
 static constexpr std::string_view kernelMultiplySrc { R"CLC(
 // -D TS=
@@ -71,7 +76,7 @@ int main() {
     std::vector<cl::Platform> platforms;
     cl::Platform::get(&platforms);
 
-    auto platform = platforms[1];
+    auto platform = platforms[0];
     std::vector<cl::Device> devices;
     platform.getDevices(CL_DEVICE_TYPE_GPU, &devices);
 
@@ -137,3 +142,7 @@ int main() {
     }
 
 }
+
+/*!
+ * @}
+ */
