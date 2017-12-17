@@ -20,14 +20,14 @@ int main() {
     cl::CommandQueue queue { context, device };
 
     cl::Program add { context,
-R"CLC(
-kernel void add( const global int *vector_a,
-                 const global int *vector_b,
-                 global int *vector_c ) {
-    const int id = get_global_id(0);
-    vector_c[ id ] = vector_a[ id ] + vector_b[ id ];
-}
-)CLC", true};
+                R"CLC(
+                kernel void add( const global int *vector_a,
+                                 const global int *vector_b,
+                                 global int *vector_c ) {
+                    const int id = get_global_id(0);
+                    vector_c[ id ] = vector_a[ id ] + vector_b[ id ];
+                }
+                )CLC", true};
 
     auto addKernel = cl::make_kernel<cl::Buffer&, cl::Buffer&, cl::Buffer&>{ add, "add" };
 
