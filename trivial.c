@@ -255,7 +255,7 @@ int main(int argc, char* argv[]) {
 
     // Проверка данных
     for (int i = 0; i < N; ++i) {
-        assert( vector_c[i] == (vector_a[i] + vector_b[i]) || print(i));
+        assert( vector_c[i] == (vector_a[i] + vector_b[i]));
     }
 
     printf("Success!\n");
