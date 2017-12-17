@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['trivial_2ec',['trivial.c',['../d7/d97/trivial_8c.html',1,'']]],
-  ['trivial_2ecpp',['trivial.cpp',['../d6/d79/trivial_8cpp.html',1,'']]]
+  ['selectplatformdevice',['selectPlatformDevice',['../db/d14/group__trivial__c__group.html#gab5b70f3ad1ecc5b3be271015ff9a52b7',1,'trivial.c']]]
 ];

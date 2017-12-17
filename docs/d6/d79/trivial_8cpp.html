@@ -97,51 +97,14 @@ $(document).ready(function(){initNavTree('d6/d79/trivial_8cpp.html','../../');})
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Макросы</h2></td></tr>
-<tr class="memitem:af1b68fb4ba71d72d397f46a730f03f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d79/trivial_8cpp.html#af1b68fb4ba71d72d397f46a730f03f2f">__CL_ENABLE_EXCEPTIONS</a></td></tr>
-<tr class="separator:af1b68fb4ba71d72d397f46a730f03f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf1b68fb4ba71d72d397f46a730f03f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d66/group__trivial__cpp__group.html#gaf1b68fb4ba71d72d397f46a730f03f2f">__CL_ENABLE_EXCEPTIONS</a></td></tr>
+<tr class="separator:gaf1b68fb4ba71d72d397f46a730f03f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Функции</h2></td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d79/trivial_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
-<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d66/group__trivial__cpp__group.html#gae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="separator:gae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Макросы</h2>
-<a id="af1b68fb4ba71d72d397f46a730f03f2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1b68fb4ba71d72d397f46a730f03f2f">&#9670;&nbsp;</a></span>__CL_ENABLE_EXCEPTIONS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define __CL_ENABLE_EXCEPTIONS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="../../d6/d79/trivial_8cpp_source.html">trivial.cpp</a> строка <a class="el" href="../../d6/d79/trivial_8cpp_source.html#l00001">1</a></p>
-
-</div>
-</div>
-<h2 class="groupheader">Функции</h2>
-<a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&nbsp;</a></span>main()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int main </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="../../d6/d79/trivial_8cpp_source.html">trivial.cpp</a> строка <a class="el" href="../../d6/d79/trivial_8cpp_source.html#l00009">9</a></p>
-<div class="fragment"><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;           {</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    std::vector&lt;cl::Platform&gt; platforms;</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    cl::Platform::get(&amp;platforms);</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">auto</span> platform = platforms[1];</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    std::vector&lt;cl::Device&gt; devices;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    platform.getDevices(CL_DEVICE_TYPE_GPU, &amp;devices);</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">auto</span> device = devices[0];</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    cl::Context context { device };</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    cl::CommandQueue queue { context, device };</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    cl::Program add { context,</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                R<span class="stringliteral">&quot;CLC(</span></div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral">                kernel void add( const global int *vector_a,</span></div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">                                 const global int *vector_b,</span></div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="stringliteral">                                 global int *vector_c ) {</span></div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="stringliteral">                    const int id = get_global_id(0);</span></div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="stringliteral">                    vector_c[ id ] = vector_a[ id ] + vector_b[ id ];</span></div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="stringliteral">                }</span></div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="stringliteral">                )CLC&quot;, </span><span class="keyword">true</span>};</div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">auto</span> addKernel = cl::make_kernel&lt;cl::Buffer&amp;, cl::Buffer&amp;, cl::Buffer&amp;&gt;{ add, <span class="stringliteral">&quot;add&quot;</span> };</div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">int</span> Type;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> N = 1 &lt;&lt; 23;</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    std::vector&lt;Type&gt; vA (N);</div><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::iota(vA.begin(), vA.end(), 0);</div><div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    std::vector&lt;Type&gt; vB (N, 1);</div><div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    std::vector&lt;Type&gt; vC (N);</div><div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    cl::Buffer vADevice { context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, <span class="keyword">sizeof</span>(Type) * vA.size(), vA.data() };</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    cl::Buffer vBDevice { context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, <span class="keyword">sizeof</span>(Type) * vB.size(), vB.data() };</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    cl::Buffer vCDevice { context, CL_MEM_WRITE_ONLY, <span class="keyword">sizeof</span>(Type) * vC.size(), <span class="keyword">nullptr</span> };</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    addKernel(</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            cl::EnqueueArgs( queue, cl::NDRange(N) ),</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            vADevice, vBDevice, vCDevice</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    );</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    queue.enqueueReadBuffer(vCDevice, CL_TRUE, 0, vC.size() * <span class="keyword">sizeof</span>(Type), vC.data());</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">for</span>( <span class="keywordtype">int</span> i = 0; i &lt; N; ++i ) {</div><div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        assert( vC[i] == vA[i] + vB[i] );</div><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div></div><!-- fragment -->
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

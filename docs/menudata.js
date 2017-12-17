@@ -1,5 +1,6 @@
 var menudata={children:[
 {text:"Титульная страница",url:"index.html"},
+{text:"Описания",url:"pages.html"},
 {text:"Группы",url:"modules.html"},
 {text:"Файлы",url:"files.html",children:[
 {text:"Файлы",url:"files.html"},
