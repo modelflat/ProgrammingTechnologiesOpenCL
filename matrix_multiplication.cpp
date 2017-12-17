@@ -11,52 +11,36 @@
 
 using namespace std::literals::string_view_literals;
 
+/**! \todo test for different matrices! */
+
 static constexpr std::string_view kernelMultiplySrc { R"CLC(
-kernel void matrixMultiply(
-                const global float* A,
-			    const int numARows, const int numAColumns,
-                const global float* B,
-			    const int numBRows, const int numBColumns,
-		        global float* C,
-			    const int numCRows, const int numCColumns,
-                // local
-			    local float* ds_M,
-			    local float* ds_N
-) {
-    const int tx  = get_local_id(0);
-    const int ty  = get_local_id(1);
-    const int col = get_group_id(0) * TILE_WIDTH + tx;
-    const int row = get_group_id(1) * TILE_WIDTH + ty;
+// -D TS=
+kernel void matrixMultiply(const int M, const int N, const int K,
+                    const global float* A,
+                    const global float* B,
+                    global float* C) {
+    const int row = get_local_id(0);
+    const int col = get_local_id(1);
+    const int globalRow = TS * get_group_id(0) + row;
+    const int globalCol = TS * get_group_id(1) + col;
+    local float Asub[TS][TS];
+    local float Bsub[TS][TS];
 
-    float Pvalue = 0;
-
-    for (int m = 0; m < (numAColumns - 1) / TILE_WIDTH + 1; ++m) {
-
-        const int mtwtx = m * TILE_WIDTH + tx;
-        if (row < numARows && mtwtx < numAColumns) {
-          ds_M[ty * TILE_WIDTH + tx] = A[row * numAColumns + mtwtx];
-        } else {
-          ds_M[ty * TILE_WIDTH + tx] = 0;
-        }
-
-        const int mtwty =  m * TILE_WIDTH+ty ;
-        if (col < numBColumns && mtwty < numBRows) {
-          ds_N[ty * TILE_WIDTH + tx] = B[mtwty * numBColumns + col];
-        } else {
-          ds_N[ty * TILE_WIDTH + tx] = 0;
-        }
+    float sum = 0.0f;
+    const int numTiles = K / TS;
+    for (int t=0; t < numTiles; ++t) {
+        const int tiledRow = TS * t + row;
+        const int tiledCol = TS * t + col;
+        Asub[col][row] = A[tiledCol * M + globalRow];
+        Bsub[col][row] = B[globalCol * K + tiledRow];
 
         barrier(CLK_LOCAL_MEM_FENCE);
-
-        for (int k = 0; k < TILE_WIDTH; ++k) {
-           Pvalue += ds_M[ty * TILE_WIDTH + k] * ds_N[k * TILE_WIDTH + tx];
+        for (int k=0; k < TS; ++k) {
+            sum += Asub[k][row] * Bsub[col][k];
         }
         barrier(CLK_LOCAL_MEM_FENCE);
     }
-
-    if (row < numCRows && col < numCColumns) {
-       C[row * numCColumns + col] = Pvalue;
-    }
+    C[globalCol * M + globalRow] = sum;
 }
 )CLC"sv };
 
@@ -96,10 +80,10 @@ int main() {
     cl::Context context { device };
     cl::CommandQueue queue { context, device };
 
-    const int TILE_WIDTH = 16;
+    const int TILE_WIDTH = 3;
     cl::Program multiply { context, kernelMultiplySrc.data() };
     std::ostringstream ss;
-    ss << "-D TILE_WIDTH=" << TILE_WIDTH;
+    ss << "-D TS=" << TILE_WIDTH;
     try {
         multiply.build(ss.str().data());
     } catch (const cl::Error& e) {
@@ -107,26 +91,18 @@ int main() {
         throw e;
     }
     auto multiplyKernel = cl::make_kernel<
-            cl::Buffer&, int, int,
-            cl::Buffer&, int, int,
-            cl::Buffer&, int, int,
-            cl::LocalSpaceArg, cl::LocalSpaceArg
+            int, int, int,
+            cl::Buffer&, cl::Buffer&, cl::Buffer&
     >{ multiply, "matrixMultiply" };
 
-#define M 10
+    const int M = 3;
+    const int N = 3;
+    const int K = 3;
 
-    const int numAColumns = M;
-    const int numARows = M;
-    const int numBColumns = M;
-    const int numBRows = M;
-    const int numCColumns = M;
-    const int numCRows = M;
+    std::vector<float> matrixAHost ( M * N, 0.5f );
+    std::vector<float> matrixBHost ( N * K, 1.5f );
 
-    std::vector<float> matrixAHost ( numAColumns * numARows );
-    std::iota( matrixAHost.begin(), matrixAHost.end(), 0);
-    std::vector<float> matrixBHost ( numBColumns * numBRows, 0.5f );
-
-    std::vector<float> matrixCHost ( numCColumns * numCRows );
+    std::vector<float> matrixCHost ( M * K );
     std::vector<float> matC = matrixCHost;
 
     cl::Buffer matrixA { context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR,
@@ -138,24 +114,23 @@ int main() {
 
     multiplyKernel(
             cl::EnqueueArgs{queue,
-                            cl::NDRange {(numCColumns - 1) / TILE_WIDTH + 1, (numCRows - 1) / TILE_WIDTH + 1},
+                            cl::NDRange {M, N},
                             cl::NDRange {TILE_WIDTH, TILE_WIDTH},
-
             },
-            matrixA, numARows, numAColumns,
-            matrixB, numBRows, numBColumns,
-            matrixC, numCRows, numCColumns,
-            cl::Local(TILE_WIDTH * TILE_WIDTH), cl::Local(TILE_WIDTH * TILE_WIDTH)
+            M, N, K,
+            matrixA, matrixB, matrixC
     );
 
-    queue.enqueueReadBuffer(matrixC, CL_TRUE, 0, matrixAHost.size() * sizeof(float), matrixCHost.data());
+    queue.enqueueReadBuffer(matrixC, CL_TRUE, 0, matrixCHost.size() * sizeof(float), matrixCHost.data());
 
-    printMatrix( matrixAHost, numARows, numAColumns );
-    printMatrix( matrixBHost, numBRows, numBColumns );
-    printMatrix( matrixCHost, numCRows, numCColumns );
+//    printMatrix( matrixAHost, M, N);
+//    printMatrix( matrixBHost, N, K);
+//    printMatrix( matrixCHost, M, K);
 
     // do same on cpu
-    multiplyMatrices(matrixAHost, numAColumns, numARows, matrixBHost, numBColumns, numBRows, matC);
+    multiplyMatrices(matrixAHost, M, N, matrixBHost, N, K, matC);
+
+//    printMatrix(matC, M, K);
 
     for (size_t i = 0; i < matrixCHost.size(); ++i) {
         assert( matrixCHost[i] == matC[i] );
