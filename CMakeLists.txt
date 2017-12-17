@@ -15,4 +15,6 @@ target_link_libraries(${PROJECT_NAME}-trivial-c OpenCL)
 add_executable(${PROJECT_NAME}-trivial-cpp trivial.cpp)
 target_link_libraries(${PROJECT_NAME}-trivial-cpp OpenCL)
 
+add_executable(${PROJECT_NAME}-matrix-mul matrix_multiplication.cpp)
+target_link_libraries(${PROJECT_NAME}-matrix-mul OpenCL)
 
