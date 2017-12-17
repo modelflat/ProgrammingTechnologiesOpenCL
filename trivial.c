@@ -151,6 +151,13 @@ void selectPlatformDevice(int platformId, int deviceId, cl_platform_id* platform
     *device = devices[deviceId];
 }
 
+double getEventTimingMs(cl_event* event) {
+    cl_ulong start, end;
+    clGetEventProfilingInfo(*event, CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &start, NULL);
+    clGetEventProfilingInfo(*event, CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &end, NULL);
+    return (end - start) / 1e6;
+}
+
 int main(int argc, char* argv[]) {
     // Проверяем параметры и при отсутствии необходимых параметров
     // выводим список доступных устройств и
@@ -206,22 +213,26 @@ int main(int argc, char* argv[]) {
     cl_program program = clCreateProgramWithSource(context, 1, &programCode, &len, &err);
     assert(err == CL_SUCCESS && "Program creation failed");
     // Компилируем программу
-    clBuildProgram(program, 1, &device, "-D TYPE=float", NULL, NULL);
-    size_t logSize;
-    // Узнаем длинну сообщения openCL - компилятора
-    clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
-    char log[logSize];
-    // Получаем сообщение компилятора
-    clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, logSize, log, NULL);
-    // Выводим сообщение компилятора на экран
-    printf("Program build log:\n%s\n", log);
+    err = clBuildProgram(program, 1, &device, "-D TYPE=float", NULL, NULL);
+
+    // В случае ошибки выведем лог OpenCL C компилятора
+    if (err != CL_SUCCESS) {
+        size_t logSize;
+        // Узнаем длинну сообщения
+        clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
+        char log[logSize];
+        // Получаем сообщение компилятора
+        err = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, logSize, log, NULL);
+        // выводим сообщение компилятора на экран
+        printf("Program build log:\n%s\n", log);
+    }
 
     // Создаем kernel
     cl_kernel kernel = clCreateKernel(program, "add", &err);
     assert(err == CL_SUCCESS && "Kernel creation failed");
 
     // Определяем количество итераций
-    const int N = 1 << 23;
+    const size_t N = 1 << 23;
     // Создаем массивы с входящими и выходящими данными
     float* vector_a = malloc(sizeof(float) * N);
     float* vector_b = malloc(sizeof(float) * N);
@@ -231,11 +242,12 @@ int main(int argc, char* argv[]) {
     srand((unsigned int) t);
 
     // Заполняем входящие данные
-    for (int i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i) {
         vector_a[i] = (rand() % 100) / 100.0f;
         vector_b[i] = (rand() % 100) / 100.0f;
     }
 
+    clock_t writeT = clock();
     // Создаем буферы данных для openCL устройства и связываем их с ранее созданными массивами данных
     cl_mem vector_a_device = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, N * sizeof( float ),
                                             vector_a, &err);
@@ -245,6 +257,7 @@ int main(int argc, char* argv[]) {
     assert(err == CL_SUCCESS && "Buffer B creation failed");
     cl_mem vector_c_device = clCreateBuffer(context, CL_MEM_WRITE_ONLY, N * sizeof(float), NULL, &err);
     assert(err == CL_SUCCESS && "Buffer C creation failed");
+    writeT = clock() - writeT;
 
     // Соединяем аргументы kernel'я с созданными ранее буферами
     clSetKernelArg(kernel, 0, sizeof(cl_mem), &vector_a_device);
@@ -254,14 +267,23 @@ int main(int argc, char* argv[]) {
     size_t globalWorkItems = N;
     // Добавляем в очередь выполнения созданный ранее kernel.
     // После добавления он начинает выполняться.
-    clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &globalWorkItems, NULL, 0, NULL, NULL);
+    cl_event eventKernel;
+    clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &globalWorkItems, NULL, 0, NULL, &eventKernel);
     // Добавляем в очередь выполнения задание на считывание данных буфера vector_c_device
-    clEnqueueReadBuffer(queue, vector_c_device, CL_TRUE, 0, sizeof(float)*N, vector_c, 0, NULL, NULL);
+    cl_event eventRead;
+    clEnqueueReadBuffer(queue, vector_c_device, CL_TRUE, 0, sizeof(float)*N, vector_c, 0, NULL, &eventRead);
     // Завершаем очередь выполнения
     clFinish(queue);
+    double writeTime = writeT * 1000.0 / CLOCKS_PER_SEC;
+    double executeTime = getEventTimingMs( &eventKernel );
+    double readTime = getEventTimingMs( &eventRead );
+    printf( "Total time to add two vectors of length %lld: %f ms\n", N, writeTime + executeTime + readTime);
+    printf( "\twrite:\t\t%f ms\n", writeTime);
+    printf( "\texecute:\t%f ms\n", executeTime);
+    printf( "\tread back:\t%f ms\n", readTime);
 
     // Проверка данных
-    for (int i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i) {
         assert( vector_c[i] == (vector_a[i] + vector_b[i]));
     }
 
