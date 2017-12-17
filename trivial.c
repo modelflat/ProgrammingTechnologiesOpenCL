@@ -1,5 +1,7 @@
 /*!
-  * \defgroup trivial_c_group Пример на языке программирования С
+  * \defgroup trivial_c_group Складывание векторов С
+  *
+  * Тривиальный пример складывания векторов с использованием технологии openCL. Реализация на языке программирования C
   * @{
   */
 
@@ -253,7 +255,7 @@ int main(int argc, char* argv[]) {
     // Добавляем в очередь выполнения созданный ранее kernel.
     // После добавления он начинает выполняться.
     clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &globalWorkItems, NULL, 0, NULL, NULL);
-    // Добавляем в очередь выполнения задание на считывание данных буфера С
+    // Добавляем в очередь выполнения задание на считывание данных буфера vector_c_device
     clEnqueueReadBuffer(queue, vector_c_device, CL_TRUE, 0, sizeof(float)*N, vector_c, 0, NULL, NULL);
     // Завершаем очередь выполнения
     clFinish(queue);
