@@ -1,3 +1,8 @@
+/*!
+  * \defgroup trivial_c_group Пример на языке программирования С
+  * @{
+  */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -274,3 +279,7 @@ int main(int argc, char* argv[]) {
     clReleaseCommandQueue(queue);
     clReleaseContext(context);
 }
+
+/*!
+ * @}
+ */
