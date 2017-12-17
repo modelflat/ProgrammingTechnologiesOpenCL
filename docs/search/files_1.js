@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['trivial_2ec',['trivial.c',['../d7/d97/trivial_8c.html',1,'']]],
-  ['trivial_2ecpp',['trivial.cpp',['../d6/d79/trivial_8cpp.html',1,'']]]
+  ['readme_2emd',['README.md',['../d9/dd6/_r_e_a_d_m_e_8md.html',1,'']]]
 ];
