@@ -14,18 +14,22 @@
 #include <numeric>
 #include <cassert>
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc < 3) {
+        std::cout << "usage: <platformId> <deviceId>";
+        return 0;
+    }
     std::vector<cl::Platform> platforms;
     // Получаем список доступных платформ
     cl::Platform::get(&platforms);
     // Получаем платформу
-    auto platform = platforms[0];
+    auto platform = platforms[atoi(argv[1])];
 
     std::vector<cl::Device> devices;
     // Получаем список устройств на платформе
     platform.getDevices(CL_DEVICE_TYPE_GPU, &devices);
     // Получаем устройство
-    auto device = devices[0];
+    auto device = devices[atoi(argv[2])];
 
     // Создаем контекст
     cl::Context context { device };
