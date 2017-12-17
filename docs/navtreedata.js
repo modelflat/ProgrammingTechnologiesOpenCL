@@ -2,6 +2,7 @@ var NAVTREE =
 [
   [ "ProgrammingTechnologiesOpenCL", "index.html", [
     [ "ProgrammingTechnologiesOpenCL", "d3/dcc/md__r_e_a_d_m_e.html", null ],
+    [ "Список задач", "dd/da0/todo.html", null ],
     [ "Группы", "modules.html", "modules" ],
     [ "Файлы", null, [
       [ "Файлы", "files.html", "files" ],
