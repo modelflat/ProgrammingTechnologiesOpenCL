@@ -82,7 +82,7 @@ int print(int err) {
     return 0;
 }
 
-void select(int platformId, int deviceId, cl_platform_id* platform, cl_device_id* device) {
+void selectPlatformDevice(int platformId, int deviceId, cl_platform_id* platform, cl_device_id* device) {
     cl_uint count;
     clGetPlatformIDs(0, NULL, &count);
     cl_platform_id platforms[count];
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
     cl_platform_id platform;
     cl_device_id device;
 
-    select(atoi( argv[1] ), atoi( argv[2] ), &platform, &device);
+    selectPlatformDevice(atoi( argv[1] ), atoi( argv[2] ), &platform, &device);
 
     cl_int err;
 
