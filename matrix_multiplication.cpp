@@ -72,15 +72,20 @@ void multiplyMatrices(const std::vector<float>& a, int rowsA, int colsA,
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc < 3) {
+        std::cout << "usage: <platformId> <deviceId>";
+        return 0;
+    }
     std::vector<cl::Platform> platforms;
     cl::Platform::get(&platforms);
 
-    auto platform = platforms[0];
+    auto platform = platforms[atoi(argv[1])];
+
     std::vector<cl::Device> devices;
     platform.getDevices(CL_DEVICE_TYPE_GPU, &devices);
 
-    auto device = devices[0];
+    auto device = devices[atoi(argv[2])];
 
     cl::Context context { device };
     cl::CommandQueue queue { context, device };
