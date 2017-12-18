@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ProgrammingTechnologiesOpenCL: Титульная страница</title>
+<title>ProgrammingTechnologiesOpenCL: ProgrammingTechnologiesOpenCL</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,10 +81,155 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ProgrammingTechnologiesOpenCL Документация</div>  </div>
+<div class="title">ProgrammingTechnologiesOpenCL </div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><p>examples and other stuff needed for presentation</p>
+<p>See documentation at <a href="https://madstrix.github.io/ProgrammingTechnologiesOpenCL">https://madstrix.github.io/ProgrammingTechnologiesOpenCL</a></p>
+<p>Презентация тут: <a href="https://prezi.com/view/RhYQD47vnt0MwSNtAHuc/">https://prezi.com/view/RhYQD47vnt0MwSNtAHuc/</a><br />
+Ссылки на другие репозитории:<br />
+</p><ul>
+<li><a href="https://bitbucket.org/kirillovoa/openclexample/overview">https://bitbucket.org/kirillovoa/openclexample/overview</a><br />
+</li>
+<li><a href="https://github.com/modelflat/OCLRadixSort">https://github.com/modelflat/OCLRadixSort</a><br />
+</li>
+<li><a href="https://github.com/modelflat/coursework2">https://github.com/modelflat/coursework2</a></li>
+</ul>
+<h1>Speach</h1>
+<h2>slide 0: <b>Overview</b></h2>
+<p>Приветствие. Кто нибудь слышал про openCL? Для начала разберемся что такое этот openCL.</p>
+<h2>slide 1: <b>Что такое openCL?</b></h2>
+<p><em>OpenCL (Open Computing Language) является открытым стандартом для кросс-платформенного параллельного программирования различных процессоров, имеющихся на персональных компьютерах, серверах, мобильных устройствах и встроенных платформах.</em></p>
+<p>Посмотрим красивую <b>картинку</b> с сайта openCL. Тут представленны крупные компании-члены консорциума, которые учавствуют в разработке или активно используют данную технологию. А, также, интересные и перспективные разработки, базирующиеся на openCL.</p>
+<h3>slide 1.1: <b>Цель openCL</b></h3>
+<p><em>OpenCL является открытой стандартизированной технологией для вычислений на специализированных (CPU) и неспециализированных (GPU, APU и др.) устройствах. Это позволяет писать программы для сложных вычислений независимо от используемого оборудования. Открытость данной технологии обеспечивает независимость от разработчика, быстрое исправление ошибок разного рода и поддержку обширного коммьюнити (будь то how-to гайды или обертки для разных языков программирования)</em></p>
+<p>Тут также представлены логотипы компаний, учавствующих в разработке. Если кто-то не успел их рассмотреть. Если столько компаний разрабатывает один продукт, кто же следит за всем этим счастьем?</p>
+<h3>slide 1.2: <b>Khronos Group</b></h3>
+<p><em>Khronos Group - промышленный консорциум, состоящий из более чем 100 компаний. Целью данной организации является разработка открытых стандартов и интерфейсов программирования в области создания и воспроизведения динамической графики и звука на широком спектре платформ и устройств, с поддержкой аппаратного ускорения. Каждый участник вносит в технологии свой вклад, что обеспечивает хорошую совместимость с платформами разных производителей и позволяет охватывать как можно больше областей применения.</em></p>
+<p><em>OpenVG</em> предназначен для аппаратно-ускоряемой двухмерной векторной графики мобильных телефонов и смартфонов, медиа- и игровых консолей, и для других электронных устройств.<br />
+<em>OpenGL</em> спецификация, определяющая платформонезависимый программный интерфейс для написания приложений, использующих двумерную и трёхмерную компьютерную графику.<br />
+<em>Vulkan</em> кроссплатформенный API для 2D- и 3D-графики, впервые представленный Khronos Group в рамках конференции GDC 2015. Другое название glNext.<br />
+<em>OpenVX</em> стандарт компьютерного зрения.<br />
+<em>NNEF</em> стандарт для нейронный сетей.</p>
+<h2>slide 0: <b>Overview</b></h2>
+<p>Почему стоит использовать именно openCL, а не другие технологии для вычисления на неспециализированных устройствах?</p>
+<h2>slide 2: <b>Почему стоит использовать openCL</b></h2>
+<p><em>+ Открытое ПО, разрабатываемое сообществом разработчиков.</em><br />
+<em>+ Хорошая переносимость и высокий уровень абстракции над конкретным оборудованием.</em><br />
+<em>+ Легкая адаптация под различные языки программирования высокого уровня</em><br />
+<em>+ Технология гетерогенного программирования SYCL разрабатывается на базе openCL</em></p>
+<p>Но у всего есть минусы..</p>
+<h3>slide 2.1: <b>Минусы openCL</b></h3>
+<p><em>- Отсутствие богатой стандартной библиотеки алгоритмов.</em><br />
+<em>- Требует более высокой подготовки программиста для написания оптимального кода.</em><br />
+<em>- Хорошая переносимость достигается за счет небольшого снижения производительности.</em></p>
+<h3>slide 2.2: <b>SYCL</b></h3>
+<p><em>SYCL - открытый, кросс-платформенный уровень абстракции, основанный на базовых концепциях, мобильности и эффективности OpenCL, который позволяет писать код для гетерогенных процессоров, используя стандартные функции C++. Гетерогенность - подход, позволяющий выполнять программный код абстрагируясь от специализации процессоров. Таким образом, написанная программа будет выполняться автоматически и на CPU, и на GPU, а работа по менедменту ресурсами ложиться на SYCL.</em></p>
+<p>Ответ на вопрос "почему openCL?" очень прост. На openGL переписывают игры, потому что это более универсльный и мощный инструмент. Такая-же ситуация и с openCL &mdash; вполне возможно, что, спустя некоторое количество времени, openCL станет стандартом для крупных компаний, а через еще какой то временной период изчезнет и openCL, сменившись SYCL'ом, попробовать первыми смогут знатоки openCL.</p>
+<h2>slide 0: <b>Overview</b></h2>
+<p>Рассмотрим основные принципы и архитектуру openCL</p>
+<h2>slide 3: <b>Основные принципы</b></h2>
+<p><em><b>Слева</b></em> <em>представлена официальная диаграмма кардинальности архитектуры openCL.</em> <em><b>Справа</b></em> <em>упрощенная диаграмма, достаточная для написания программ базового и среднего уровней, использующих данную технологию.</em></p>
+<p>На самом деле это все довольно понятно и не так страшно как на этих картинках.</p>
+<h3>slide 3.1: <b>clPlatform, clDevice &amp; clContext</b></h3>
+<p>Для достижения кросс-платформенности, разработчики openCL внедрили уровень абстракции над оборудованием.<br />
+</p><ul>
+<li>clPlatform - содержит данные производителя (AMD, NVIDIA, Intel) и соединяет вызовы программного кода с соответствующами участками микрокода драйвера производителя.<br />
+</li>
+<li>clDevice - инкапсулирует конкретное устройство, принадлежащее платформе и содержит еще больше конкретики относительно платформы.<br />
+</li>
+<li>clContext - абстрактный объект, объединяющий платформу, устройство, kernel и очередь выполнения.</li>
+</ul>
+<h3>slide 3.2: <b>clProgram &amp; clKernel</b></h3>
+<p>*В целом, программа с использованием openCL, состоит из двух (и более) программ. Host - является главной и отвечает за создание контекста и kernel'ей, подготовку данных и интероперабельность с другими технологиями (например openGL). Kernel - второстепенная программа, выполняющаяся непосредственно на устройстве. Kernel'ей может быть несколько, они могут обмениваться данными между собой. Kernel компилируется непосредственно перед запуском исходя из окружения (clContext), что и обеспечивает кроссплатформенность. Также, программа, написанная на openCL, может полностью использовать память устройств. Для этого существуют модификаторы памяти:</p><ul>
+<li>global - видеопамять, общая для контекста (достаточно медленная);<br />
+</li>
+<li>local - память виртуального ядра, общая для всех виртуальных ядер (бастрая, меньший объем);<br />
+</li>
+<li>private - кеш виртуального процессора (очень быстрая, очень маленький объем);<br />
+</li>
+<li>constant - отдельный логический раздел для констант, распологается или в global, или в local, что определяется производителем.*</li>
+</ul>
+<h2>slide 0: <b>Overview</b></h2>
+<p><code>"Хватит болтать - покажи мне код!"</code></p>
+<h2>slide 4: <b>Примеры</b></h2>
+<p><em>openCL имеет огромный функционал, в основном, за счет того, что имеет достаточно мало ограничений. Host программы может быть написан на любом языке программирования, так как любой язык программирования может обращаться к системным библиотекам. Kernel - должен быть написан на языке openCL C 14. Хотя, kernel лишен стандартной библиотеки языка C, но имеет встроенные функции, позволяющие более гибко использовать ресурсы устройства.</em></p>
+<h3>slide 4.1: <b>Складывание векторов С</b></h3>
+<p>Тривиальная программа складывающая два вектора длинны N, реализованная на языке программирования С.<br />
+</p><ul>
+<li>Создание <code>clPlatform</code> и <code>clDevice</code> исходя из аргументов запуска;<br />
+</li>
+<li>Создание <code>clContext</code>;<br />
+</li>
+<li>Создание <code>clCommandQueue</code>;<br />
+</li>
+<li>Создание <code>clProgram</code> и ее компиляция;<br />
+</li>
+<li>Создание и заполнение массивов данных, перенос данных на устройство;<br />
+</li>
+<li>Создание <code>clKernel</code>;<br />
+</li>
+<li>Заполнение <code>clQueue</code> операциями выполнение kernel'я и считывания данных с устройства;<br />
+</li>
+<li>Вывод информации о времени выполнения;<br />
+</li>
+<li>Проверка правильности выполнения;<br />
+</li>
+<li>Освобождение ресурсов и завершение программы.</li>
+</ul>
+<p>А вот как выглядит <b>вывод</b> этой программы.</p>
+<p>Если кому интересно давайте заглянем в исходные коды: <a href="https://madstrix.github.io/ProgrammingTechnologiesOpenCL/d7/d97/trivial_8c_source.html">https://madstrix.github.io/ProgrammingTechnologiesOpenCL/d7/d97/trivial_8c_source.html</a></p>
+<h3>slide 4.2: Складывание векторов С++</h3>
+<p>Программа из предидущего примера, но реализованная на языке программирования C++.<br />
+</p><ul>
+<li>Создание <code>cl::Platform</code> и <code>cl::Device</code> исходя из аргументов запуска;<br />
+</li>
+<li>Создание <code>cl::Context</code>;<br />
+</li>
+<li>Создание <code>cl::CommandQueue</code>;<br />
+</li>
+<li>Создание <code>cl::Program</code> и ее компиляция;<br />
+</li>
+<li>Создание и заполнение массивов данных, перенос данных на устройство;<br />
+</li>
+<li>Создание <code>cl::Kernel</code>;<br />
+</li>
+<li>Заполнение <code>cl::Queue</code> операциями выполнение kernel'я и считывания данных с устройства;<br />
+</li>
+<li>Проверка правильности выполнения.</li>
+</ul>
+<p>Если кому интересно давайте заглянем в исходные коды: <a href="https://madstrix.github.io/ProgrammingTechnologiesOpenCL/d6/d79/trivial_8cpp_source.html">https://madstrix.github.io/ProgrammingTechnologiesOpenCL/d6/d79/trivial_8cpp_source.html</a></p>
+<h3>slide 4.3: <b>Рассчет интегралла Kotlin</b></h3>
+<ul>
+<li>Создание <code>CLContext</code> исходя из мощности доступных устройств;</li>
+<li>Создание <code>CLCommandQueue</code>;</li>
+<li>Создание и заполнение массивов выходных данных, ассоциация данных с памятью на устройстве;</li>
+<li>Создание <code>CLKernel</code>;</li>
+<li>Заполнение <code>CLQueue</code> операциями выполнение kernel'я и считывания данных с устройства;</li>
+</ul>
+<p>А вот как выглядит <b>вывод</b> этой программы.</p>
+<p>Если кому интересно давайте заглянем в исходные коды: <a href="https://bitbucket.org/kirillovoa/openclexample/src/69cf1b5c537044fbb5186cbbdf5bc563224ce32d/src/main/kotlin/org/bitbucket/kirillovoa/openCLExample/ComputeCL.kt?at=master&fileviewer=file-view-default">https://bitbucket.org/kirillovoa/openclexample/src/69cf1b5c537044fbb5186cbbdf5bc563224ce32d/src/main/kotlin/org/bitbucket/kirillovoa/openCLExample/ComputeCL.kt?at=master&amp;fileviewer=file-view-default</a></p>
+<h3>slide 4.4: <b>Другие примеры</b></h3>
+<ul>
+<li>Перемножение матриц (С++) : <a href="https://github.com/modelflat/ProgrammingTechnologiesOpenCL/blob/master/matrix_multiplication.cpp">https://github.com/modelflat/ProgrammingTechnologiesOpenCL/blob/master/matrix_multiplication.cpp</a></li>
+<li>Интероперабельность с openGL :</li>
+</ul>
+<h2>slide 0: <b>Overview</b></h2>
+<p>Ну вот и все. Все, кто хочет более подробно ознакомиться к исходными кодами запысывайте ссылочки)</p>
+<h2>slide 5: <b>Код тут)</b></h2>
+<p><em>Полные версии исходных текстов и некоторые примеры можно посмотреть по следующим ссылкам:</em><br />
+</p><ul>
+<li><a href="https://github.com/modelflat/ProgrammingTechnologiesOpenCL">https://github.com/modelflat/ProgrammingTechnologiesOpenCL</a> &amp; <a href="https://github.com/madstrix/ProgrammingTechnologiesOpenCL">https://github.com/madstrix/ProgrammingTechnologiesOpenCL</a> <br />
+</li>
+<li><a href="https://bitbucket.org/kirillovoa/openclexample">https://bitbucket.org/kirillovoa/openclexample</a> <br />
+</li>
+<li><a href="https://github.com/modelflat/coursework2">https://github.com/modelflat/coursework2</a> <br />
+</li>
+<li><a href="https://github.com/modelflat/OCLRadixSort">https://github.com/modelflat/OCLRadixSort</a></li>
+</ul>
+<h2>slide 0: <b>Overview</b></h2>
+<p>Спасибо за внимание! </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

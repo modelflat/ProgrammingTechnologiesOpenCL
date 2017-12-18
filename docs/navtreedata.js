@@ -1,7 +1,6 @@
 var NAVTREE =
 [
   [ "ProgrammingTechnologiesOpenCL", "index.html", [
-    [ "ProgrammingTechnologiesOpenCL", "d3/dcc/md__r_e_a_d_m_e.html", null ],
     [ "Список задач", "dd/da0/todo.html", null ],
     [ "Группы", "modules.html", "modules" ],
     [ "Файлы", null, [
@@ -17,7 +16,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"d3/dcc/md__r_e_a_d_m_e.html"
+"d4/d66/group__trivial__cpp__group.html"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';
