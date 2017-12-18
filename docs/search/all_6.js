@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['Перемножение_20матриц_20c_2b_2b',['Перемножение матриц C++',['../d9/d13/group__matrix__multiplication.html',1,'']]],
-  ['Список_20задач',['Список задач',['../dd/da0/todo.html',1,'']]],
-  ['Складывание_20векторов_20С',['Складывание векторов С',['../db/d14/group__trivial__c__group.html',1,'']]],
-  ['Складывание_20векторов_20С_2b_2b',['Складывание векторов С++',['../d4/d66/group__trivial__cpp__group.html',1,'']]]
+  ['trivial_2ec',['trivial.c',['../d7/d97/trivial_8c.html',1,'']]],
+  ['trivial_2ecpp',['trivial.cpp',['../d6/d79/trivial_8cpp.html',1,'']]]
 ];

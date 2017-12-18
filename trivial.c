@@ -151,8 +151,16 @@ void selectPlatformDevice(int platformId, int deviceId, cl_platform_id* platform
     *device = devices[deviceId];
 }
 
+/*!
+ * \brief getEventTimingMs Считает время выполнения события
+ *
+ * Событие хранит информацию о том как протекает событие. Данная функция вычисляет чистое время выполнения события.
+ * \param [in] event Событие, для которого необходимо вычислить время
+ * \return Время выполнения события
+ */
 double getEventTimingMs(cl_event* event) {
     cl_ulong start, end;
+    // Получаем время начала и конца события
     clGetEventProfilingInfo(*event, CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &start, NULL);
     clGetEventProfilingInfo(*event, CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &end, NULL);
     return (end - start) / 1e6;
@@ -247,7 +255,7 @@ int main(int argc, char* argv[]) {
         vector_b[i] = (rand() % 100) / 100.0f;
     }
 
-    clock_t writeT = clock();
+    clock_t writeT = clock();       //< Замеряем время начала создания буферов
     // Создаем буферы данных для openCL устройства и связываем их с ранее созданными массивами данных
     cl_mem vector_a_device = clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, N * sizeof( float ),
                                             vector_a, &err);
@@ -257,7 +265,7 @@ int main(int argc, char* argv[]) {
     assert(err == CL_SUCCESS && "Buffer B creation failed");
     cl_mem vector_c_device = clCreateBuffer(context, CL_MEM_WRITE_ONLY, N * sizeof(float), NULL, &err);
     assert(err == CL_SUCCESS && "Buffer C creation failed");
-    writeT = clock() - writeT;
+    writeT = clock() - writeT;      //< Получаем время, затраченое на создание буферов
 
     // Соединяем аргументы kernel'я с созданными ранее буферами
     clSetKernelArg(kernel, 0, sizeof(cl_mem), &vector_a_device);
@@ -274,9 +282,12 @@ int main(int argc, char* argv[]) {
     clEnqueueReadBuffer(queue, vector_c_device, CL_TRUE, 0, sizeof(float)*N, vector_c, 0, NULL, &eventRead);
     // Завершаем очередь выполнения
     clFinish(queue);
+
     double writeTime = writeT * 1000.0 / CLOCKS_PER_SEC;
+    // Получаем время выполнения расчетов и время чтения данных
     double executeTime = getEventTimingMs( &eventKernel );
     double readTime = getEventTimingMs( &eventRead );
+    // Выводим тайминги на экран
     printf( "Total time to add two vectors of length %lld: %f ms\n", N, writeTime + executeTime + readTime);
     printf( "\twrite:\t\t%f ms\n", writeTime);
     printf( "\texecute:\t%f ms\n", executeTime);
