@@ -1,7 +1,8 @@
 # ProgrammingTechnologiesOpenCL
 examples and other stuff needed for presentation
 
-See documentation at https://madstrix.github.io/ProgrammingTechnologiesOpenCL\n
+See documentation at https://madstrix.github.io/ProgrammingTechnologiesOpenCL
+
 Презентация тут: https://prezi.com/view/RhYQD47vnt0MwSNtAHuc/\n
 Ссылки на другие репозитории:\n
     - https://bitbucket.org/kirillovoa/openclexample/overview\n
