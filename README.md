@@ -131,8 +131,9 @@ Host программы может быть написан на любом яз�
  Если кому интересно давайте заглянем в исходные коды: https://bitbucket.org/kirillovoa/openclexample/src/69cf1b5c537044fbb5186cbbdf5bc563224ce32d/src/main/kotlin/org/bitbucket/kirillovoa/openCLExample/ComputeCL.kt?at=master&fileviewer=file-view-default
 
 ### slide 4.4: **Другие примеры**
- - Перемножение матриц (С++) : https://github.com/modelflat/ProgrammingTechnologiesOpenCL/blob/master/matrix_multiplication.cpp
- - Интероперабельность с openGL :
+ - Перемножение матриц (С++):\n https://github.com/modelflat/ProgrammingTechnologiesOpenCL/blob/master/matrix_multiplication.cpp
+ - Интероперабельность с openGL:\n
+ https://github.com/modelflat/coursework2/blob/master/src/main/java/com/github/modelflat/coursework2/core/MyGLCanvasWrapper.java#L108
 
 ## slide 0: **Overview**
 Ну вот и все. Все, кто хочет более подробно ознакомиться к исходными кодами запысывайте ссылочки)
